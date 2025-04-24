@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace DungeonExplorer
 {
@@ -32,30 +33,36 @@ namespace DungeonExplorer
             {
                 var hornetsNest =
                     new Room("Hornet's Nest \n You walk into a large cave with honeycombed walls, the floor is sticky and you hear a buzzing noise in the distance...");
+                this.CurrentRoom = hornetsNest;
             }
             else if (userInput == "3")
             {
                 var crabLair =
                     new Room("Crab Infested Lair \n You walk into a cave with a thin layer of water along the floor and a scuttering sound in the distance...");
+                this.CurrentRoom = crabLair;
             }
             else if (userInput == "4")
             {
                 var pirateCavern =
                     new Room("Undead Pirate Cavern \n You walk into a cave scattered with pirates crawling along the floor with flesh missing from their bodies you immediately feel a sense of danger...");
+                this.CurrentRoom = pirateCavern;
             }
             else if (userInput == "5")
             {
                 var navyRoom =
                     new Room("Navy Soldier's Armory \n You are trespassing in a navy soldier armory with soldiers loitering and armoring up, they all turn to look at you in confusion...");
+                this.CurrentRoom = navyRoom;
             }
             else if (userInput == "6")
             {
                 var phantomRoom =
                     new Room("Phantom's Graveyard \n You walk into a gloomy graveyard, fog covers your sight and you hear shrieking in the distance... ");
+                this.CurrentRoom = phantomRoom;
             }
             else if (userInput == "7")
             {
                 var bossRoom = new Room("Boss Room \n Placeholder");
+                this.CurrentRoom = bossRoom;
             }
             else
             {
@@ -110,7 +117,7 @@ namespace DungeonExplorer
             protected int health;
             protected string name;
 
-            protected Creature(string _name, int _health)
+            public Creature(string _name, int _health)
             {
                 name = _name;
                 health = _health;
@@ -119,15 +126,23 @@ namespace DungeonExplorer
 
         public class Monster : Creature
         {
-            public Monster() : base("Monster", 500)
+            public Monster(string name, int health) : base(name, health)
             {
             }
         }
 
-        public class Boss : Creature
+        public class Boss : Monster
         {
             public Boss() : base("Boss", 1500)
             {
+            }
+        }
+
+        public class Hornet : Monster
+        {
+            public Hornet() : base("Hornet", 200)
+            {
+                
             }
         }
     }
