@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
 
 namespace DungeonExplorer
 {
@@ -10,7 +12,7 @@ namespace DungeonExplorer
         public static void GameStart() // Initialize the game with one room and one player
         {
             gameMap = new Game_Map(15, 10);
-            player = new Player(100);
+            player = new Player(100, 100, 50);
             player.CurrentRoom =
                 new Room("Skulls shores \n The entrance to the island you notice two large caves in front of you and you are stood on a large sandy beach, the sun is blazing");
             Console.WriteLine("Welcome to the Pirate Dungeon Explorer!");
@@ -48,9 +50,7 @@ namespace DungeonExplorer
 
             player.LevelNumber++;
         }
-
         
-
         public static void Maingameloop()
         {
             var isPlaying = true;
@@ -65,7 +65,9 @@ namespace DungeonExplorer
                 Console.WriteLine("3. View Inventory");
                 Console.WriteLine("4. View description of room");
                 Console.WriteLine("5. View Map");
-                Console.WriteLine("6. Exit Game");
+                Console.WriteLine("6. Start Room Battle!");
+                Console.WriteLine("7. Keep searching room");
+                Console.WriteLine("8. Exit Game");
                 Console.WriteLine("Enter your choice using 1 to 6:");
 
                 var userInput = Console.ReadLine();
@@ -97,6 +99,15 @@ namespace DungeonExplorer
                     gameMap.DisplayMap();
                 }
                 else if (userInput == "6")
+                {
+                    BattleManager b = new BattleManager(player, new Hornet());
+                    b.StartBattle();
+                }
+                else if (userInput == "7")
+                {
+                    throw new NotImplementedException();
+                }
+                else if (userInput == "8")
                 {
                     Console.WriteLine(
                         "You chose to Exit the game"); // Option to exit the game and terminate the console
