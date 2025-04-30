@@ -6,7 +6,7 @@ namespace DungeonExplorer
 {
     internal class Game
     {
-        private static Player player;
+        public static Player player;
         private static Game_Map gameMap;
 
         public static void GameStart() // Initialize the game with one room and one player
@@ -65,9 +65,8 @@ namespace DungeonExplorer
                 Console.WriteLine("3. View Inventory");
                 Console.WriteLine("4. View description of room");
                 Console.WriteLine("5. View Map");
-                Console.WriteLine("6. Start Room Battle!");
-                Console.WriteLine("7. Keep searching room");
-                Console.WriteLine("8. Exit Game");
+                Console.WriteLine("6. Keep searching room");
+                Console.WriteLine("7. Exit Game");
                 Console.WriteLine("Enter your choice using 1 to 6:");
 
                 var userInput = Console.ReadLine();
@@ -100,14 +99,9 @@ namespace DungeonExplorer
                 }
                 else if (userInput == "6")
                 {
-                    BattleManager b = new BattleManager(player, new Hornet());
-                    b.StartBattle();
+                    // Not implemented
                 }
                 else if (userInput == "7")
-                {
-                    throw new NotImplementedException();
-                }
-                else if (userInput == "8")
                 {
                     Console.WriteLine(
                         "You chose to Exit the game"); // Option to exit the game and terminate the console

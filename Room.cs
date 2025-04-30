@@ -5,6 +5,36 @@ namespace DungeonExplorer
     public class Room
 
     {
+        
+        public static Room spidersDen =
+            new Room(
+                "Spider's Den \n You walk into a large cave covered in cobwebs, and you feel a unnerving feeling...");
+        
+        public static Room hornetsNest =
+            new Room(
+                "Hornet's Nest \n You walk into a large cave with honeycombed walls, the floor is sticky and you hear a buzzing noise in the distance...");
+        
+        public static Room crabLair =
+            new Room(
+                "Crab Infested Lair \n You walk into a cave with a thin layer of water along the floor and a scuttering sound in the distance...");
+        
+        public static Room pirateCavern =
+            new Room(
+                "Undead Pirate Cavern \n You walk into a cave scattered with pirates crawling along the floor with flesh missing from their bodies you immediately feel a sense of danger...");
+        
+        public static Room navyRoom =
+            new Room(
+                "Navy Soldier's Armory \n You are trespassing in a navy soldier armory with soldiers loitering and armoring up, they all turn to look at you in confusion...");
+        
+        public static Room phantomRoom =
+            new Room(
+                "Phantom's Graveyard \n You walk into a gloomy graveyard, fog covers your sight and you hear shrieking in the distance... ");
+        
+        public static Room bossRoom = 
+            new Room(
+                "Pirate Captain Room \n You walk into a huge cavern with a huge pirate ship on a large lake spanning the room. And a large gold chest within the middle of the ship");
+            
+        
         private readonly string description;
 
         public Room(string description)

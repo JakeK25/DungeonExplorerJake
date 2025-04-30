@@ -4,22 +4,24 @@ namespace DungeonExplorer
 {
     public class BattleManager
     {
-        private IDamageable player;
-        private IDamageable enemy;
+        private Creature player;
+        private Creature enemy;
 
-        public BattleManager(IDamageable player, IDamageable enemy)
+        public BattleManager(Creature _player, Creature _enemy)
         {
-            this.player = player;
-            this.enemy = enemy;
+            this.player = _player;
+            this.enemy = _enemy;
         }
-
+        
         public void StartBattle()
         {
             Console.Clear();
             Console.WriteLine("Battle Has Begun!");
-
-            Console.WriteLine("Player's Health: {player.health}");
-            Console.WriteLine("Creature's Health: {enemy.health}");
+            
+            Console.ReadLine();
+            
+            Console.WriteLine($"Player's Health: {player.health}");
+            Console.WriteLine($"Creature's Health: {enemy.health}");
 
             // Loop until either player or enemy is dead
             while (player.IsAlive() && enemy.IsAlive())
@@ -36,6 +38,9 @@ namespace DungeonExplorer
                     break;
                 }
 
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+                
                 // Enemy's Turn
                 Console.WriteLine("\nEnemy's Turn to strike! Be cautious!");
                 // Enemy attacks player
@@ -45,11 +50,13 @@ namespace DungeonExplorer
                 if (!player.IsAlive())
                 {
                     Console.WriteLine("You have died. Better luck next time...");
-                    break;
+                    Console.WriteLine("Press any key to exit game...");
+                    Console.ReadLine();
+                    Environment.Exit(0);
                 }
 
                 // Wait for player to press Enter before the next turn
-                Console.WriteLine("\nPress Enter to continue to the next round...");
+                Console.WriteLine("Press any key to continue...");
                 Console.ReadLine();
             }
 

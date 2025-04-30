@@ -76,55 +76,41 @@ namespace DungeonExplorer
         public void MoveRoomChoice()
         {
             Console.WriteLine(
-                "Which room would you like to enter? \n 1. Spiders Den (S) \n 2. Hornets Lair (H) \n 3. Crab Infested Lair (C) \n 4. Undead Pirate Cavern (U) \n 5. Navy Soldier's Armory (N) \n 6. Phantom's Graveyard (P) \n 7. BOSS ROOM! (B)");
+                "Which room would you like to enter? \n 1. Spiders Den (S) \n 2. Hornets Nest (H) \n 3. Crab Infested Lair (C) \n 4. Undead Pirate Cavern (U) \n 5. Navy Soldier's Armory (N) \n 6. Phantom's Graveyard (P) \n 7. BOSS ROOM! (B)");
             var userInput = Console.ReadLine();
 
             if (userInput == "1")
             {
-                var spidersDen =
-                    new Room(
-                        "Spider's Den \n You walk into a large cave covered in cobwebs, and you feel a unnerving feeling...");
-                this.CurrentRoom = spidersDen;
+                this.CurrentRoom = Room.spidersDen;
             }
             else if (userInput == "2")
             {
-                var hornetsNest =
-                    new Room(
-                        "Hornet's Nest \n You walk into a large cave with honeycombed walls, the floor is sticky and you hear a buzzing noise in the distance...");
-                this.CurrentRoom = hornetsNest;
+                this.CurrentRoom = Room.hornetsNest;
             }
             else if (userInput == "3")
             {
-                var crabLair =
-                    new Room(
-                        "Crab Infested Lair \n You walk into a cave with a thin layer of water along the floor and a scuttering sound in the distance...");
-                this.CurrentRoom = crabLair;
+                this.CurrentRoom = Room.crabLair;
             }
             else if (userInput == "4")
             {
-                var pirateCavern =
-                    new Room(
-                        "Undead Pirate Cavern \n You walk into a cave scattered with pirates crawling along the floor with flesh missing from their bodies you immediately feel a sense of danger...");
-                this.CurrentRoom = pirateCavern;
+                this.CurrentRoom = Room.pirateCavern;
             }
             else if (userInput == "5")
             {
-                var navyRoom =
-                    new Room(
-                        "Navy Soldier's Armory \n You are trespassing in a navy soldier armory with soldiers loitering and armoring up, they all turn to look at you in confusion...");
-                this.CurrentRoom = navyRoom;
+                this.CurrentRoom = Room.navyRoom;
             }
             else if (userInput == "6")
             {
-                var phantomRoom =
-                    new Room(
-                        "Phantom's Graveyard \n You walk into a gloomy graveyard, fog covers your sight and you hear shrieking in the distance... ");
-                this.CurrentRoom = phantomRoom;
+                this.CurrentRoom = Room.phantomRoom;
             }
             else if (userInput == "7")
             {
-                var bossRoom = new Room("Boss Room \n Placeholder");
-                this.CurrentRoom = bossRoom;
+                this.CurrentRoom = Room.bossRoom;
+
+                Console.WriteLine("The Pirate Captain has ambushed you");
+                BattleManager b = new BattleManager(Game.player, new PirateCaptain());
+                b.StartBattle();
+                
             }
             else
             {
@@ -138,7 +124,7 @@ namespace DungeonExplorer
     {
         
         public int maxHealth;
-        public int health;
+        public int health {get; set;}
         public string Name { get; private set; }
         public int Health { get; set; }
         public int AttackDamage { get; set; }
@@ -161,7 +147,7 @@ namespace DungeonExplorer
         public void TakeDamage(int amount)
         {
             health -= amount;
-            Console.WriteLine($"Creature took {amount} damage, Remaining health {Health}");
+            Console.WriteLine($"Creature took {amount} damage, Remaining health {health}");
         }
         
         public bool IsAlive()
@@ -174,41 +160,18 @@ namespace DungeonExplorer
         public Creature()
         {
         }
-
         public virtual Creature DoMove(Creature c)
         {
             throw new System.NotImplementedException();
         }
     }
 
-    public class Boss : Creature
+    public class PirateCaptain : Creature
     {
-        public Boss() : base("Boss", 500)
+        public PirateCaptain() : base("PirateCaptain", 200)
         {
-        }
-    }
-
-    public class Hornet : Creature
-    {
-        public Hornet() : base("Hornet", 100)
-        {
-            Health = 100;
-            AttackDamage = 10;
-        }
-    }
-
-    public class Spider : Creature
-    {
-        public Spider() : base("Spider", 100)
-        {
-
-        }
-
-        public override Creature DoMove(Creature c)
-        {
-            c.health -= 10;
-            Console.WriteLine("The Spider struck you with a web, It dealt 10 damage!");
-            return c;
+            health = 200;
+            AttackDamage = 20;
         }
     }
 }
