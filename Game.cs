@@ -99,6 +99,7 @@ namespace DungeonExplorer
                 else if (userInput == "5")
                 {
                     Console.WriteLine("You chose to view the map"); // Display Map Option
+                    Console.WriteLine(" S = Spiders Den \n H = Hornets Nest \n C = Crab Infested Lair \n U = Undead Pirate Cavern \n P = Phantom Graveyard \n N = Navy Armory \n B = Secret Boss Room...");
                     gameMap.DisplayMap();
                 }
                 else if (userInput == "6")

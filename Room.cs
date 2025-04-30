@@ -4,22 +4,43 @@ using System.Collections.Generic;
 namespace DungeonExplorer
 {
     public class Room
-
     {
         public static bool bossDefeated = false;
+        public static bool hornetDefeated = false;
+        public static bool spiderDefeated = false;
         private List<Item> itemChoices;
         private bool hasBeenSearched = false;
+        private bool hasEnemy;
+        private string enemyType;
 
-        public Room(string _description, Item item1, Item item2)
+        public Room(string _description, Item item1, Item item2, bool _hasEnemy = false, string _enemyType = "")
         {
             description = _description;
             itemChoices = new List<Item> { item1, item2 };
+            hasEnemy = _hasEnemy;
+            enemyType = _enemyType;
         }
 
         public virtual void OnPlayerEnter(Player player)
         {
             Console.WriteLine(description);
             hasBeenSearched = false;
+
+            if (hasEnemy)
+            {
+                if (enemyType == "Spider" && !spiderDefeated)
+                {
+                    Console.WriteLine("A giant spider appears and attacks!");
+                    BattleManager b = new BattleManager(Game.player, new Spider());
+                    b.StartBattle();
+                }
+                else if (enemyType == "Hornet" && !hornetDefeated)
+                {
+                    Console.WriteLine("A massive hornet swoops down to attack!");
+                    BattleManager b = new BattleManager(Game.player, new Hornet());
+                    b.StartBattle();
+                }
+            }
         }
 
         public void SearchingRoom(Player player)
@@ -81,13 +102,17 @@ namespace DungeonExplorer
             new Room(
                 "Spider's Den \n You walk into a large cave covered in cobwebs, and you feel a unnerving feeling...",
                 spiderVenom,
-                spiderFang
+                spiderFang,
+                true,
+                "Spider"
                 );
 
         public static Room hornetsNest =
                 new Room("Hornet's Nest \n You walk into a large cave with honeycombed walls, the floor is sticky and you hear a buzzing noise in the distance...",
                     honeyJar,
-                    hornetStinger);
+                    hornetStinger,
+                    true,
+                    "Hornet");
 
         public static Room crabLair =
             new Room(

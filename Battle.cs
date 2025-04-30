@@ -47,6 +47,14 @@ namespace DungeonExplorer
                     {
                         Room.bossDefeated = true;
                     }
+                    else if (enemy is Hornet)
+                    {
+                        Room.hornetDefeated = true;
+                    }
+                    else if (enemy is Spider)
+                    {
+                        Room.spiderDefeated = true;
+                    }
                     break;
                 }
 

@@ -36,7 +36,7 @@ namespace DungeonExplorer
         public int LevelNumber = 1;
         public string Name { get; private set; }
 
-
+        public Player(){}
 
         public Player(int _health, int _maxHealth, int attackdamage) // Create health system and gather input from the user for username
         {
@@ -170,19 +170,16 @@ namespace DungeonExplorer
 
         public void TakeDamage(int amount)
         {
-            health -= amount;
-            Console.WriteLine($"Creature took {amount} damage, Remaining health {health}");
-
             if (IsDead) return;
             
             health -= amount;
-            Console.WriteLine($"Creature took {amount} damage, Remaining health {health}");
+            Console.WriteLine($"{Name} took {amount} damage, Remaining health {health}");
 
             if (health <= 0)
             {
                 health = 0;
                 IsDead = true;
-                Console.WriteLine("Creature is defeated!");
+                Console.WriteLine($"{Name} is defeated!");
             }
         }
         
@@ -204,7 +201,25 @@ namespace DungeonExplorer
         public PirateCaptain() : base("PirateCaptain", 200)
         {
             health = 200;
-            AttackDamage = 20;
+            AttackDamage = 25;
+        }
+    }
+
+    public class Hornet : Creature
+    {
+        public Hornet() : base("Hornet", 100)
+        {
+            health = 100;
+            AttackDamage = 12;
+        }
+    }
+
+    public class Spider : Creature
+    {
+        public Spider() : base("Spider", 100)
+        {
+            health = 100;
+            AttackDamage = 8;
         }
     }
 }
