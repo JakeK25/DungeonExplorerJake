@@ -43,6 +43,10 @@ namespace DungeonExplorer
                 if (!enemy.IsAlive())
                 {
                     Console.WriteLine("Congrats! You killed the enemy!");
+                    if (enemy is PirateCaptain)
+                    {
+                        Room.bossDefeated = true;
+                    }
                     break;
                 }
 

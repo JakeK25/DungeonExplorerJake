@@ -122,12 +122,16 @@ namespace DungeonExplorer
             {
                 this.CurrentRoom = Room.bossRoom;
 
-                
-                
-                Console.WriteLine("The Pirate Captain has ambushed you");
-                BattleManager b = new BattleManager(Game.player, new PirateCaptain());
-                b.StartBattle();
-                
+                if (Room.bossDefeated)
+                {
+                    Console.WriteLine("The Pirate Captain has already been defeated!");
+                }
+                else
+                {
+                    Console.WriteLine("The Pirate Captain has ambushed you");
+                    BattleManager b = new BattleManager(Game.player, new PirateCaptain());
+                    b.StartBattle();
+                }
             }
             else
             {

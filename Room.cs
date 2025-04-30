@@ -6,7 +6,7 @@ namespace DungeonExplorer
     public class Room
 
     {
-        
+        public static bool bossDefeated = false;
         private List<Item> itemChoices;
         private bool hasBeenSearched = false;
 
