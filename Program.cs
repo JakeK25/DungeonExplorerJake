@@ -5,7 +5,7 @@
         private static void Main(string[] args)
         {
             Game.GameStart();
-
+            Game.StoryOpening();
             Game.Maingameloop();
         }
     }

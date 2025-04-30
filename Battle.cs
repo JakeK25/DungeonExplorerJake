@@ -5,7 +5,9 @@ namespace DungeonExplorer
     public class BattleManager
     {
         private Creature player;
-        private Creature enemy;
+        public Creature enemy { get; private set; }
+
+
 
         public BattleManager(Creature _player, Creature _enemy)
         {
@@ -15,6 +17,12 @@ namespace DungeonExplorer
         
         public void StartBattle()
         {
+            if (enemy.IsAlive() == false)
+            {
+                Console.WriteLine("enemy already dead");
+                return;
+            }
+
             Console.Clear();
             Console.WriteLine("Battle Has Begun!");
             

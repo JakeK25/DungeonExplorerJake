@@ -10,5 +10,8 @@ namespace DungeonExplorer
             name = _name;
             desc = _desc;
         }
+        
+        
+
     }
 }

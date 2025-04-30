@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace DungeonExplorer
 {
@@ -31,7 +32,7 @@ namespace DungeonExplorer
 
 
         public Room CurrentRoom;
-        private readonly List<Item> inventory = new List<Item>();
+        private List<Item> inventory = new List<Item>();
         public int LevelNumber = 1;
         public string Name { get; private set; }
 
@@ -67,10 +68,24 @@ namespace DungeonExplorer
 
         public void InventoryContents()
         {
-            Console.Write("Your current inventory is: "); // Display inventory to the user
+            Console.WriteLine("Your current inventory is: "); // Display inventory to the user
             foreach (var i in inventory)
-                Console.Write("" + i.name + " ");
+                Console.WriteLine("" + i.name + " ");
             Console.Read();
+        }
+        
+        public void SortInventoryAlphabetically()
+        {
+            var sortedList = inventory.OrderBy(item => item.name).ToList();
+            inventory = sortedList;
+            Console.WriteLine("Inventory sorted alphabetically!");
+        }
+
+        // Example method to integrate sorting into the game loop
+        public void ShowSortedInventory()
+        {
+            SortInventoryAlphabetically();
+            InventoryContents();
         }
 
         public void MoveRoomChoice()
@@ -107,6 +122,8 @@ namespace DungeonExplorer
             {
                 this.CurrentRoom = Room.bossRoom;
 
+                
+                
                 Console.WriteLine("The Pirate Captain has ambushed you");
                 BattleManager b = new BattleManager(Game.player, new PirateCaptain());
                 b.StartBattle();
@@ -116,6 +133,7 @@ namespace DungeonExplorer
             {
                 Console.WriteLine("Something went wrong... Please enter a number between 1 and 7...");
             }
+            this.CurrentRoom.OnPlayerEnter(this);
         }
     }
 
@@ -128,6 +146,8 @@ namespace DungeonExplorer
         public string Name { get; private set; }
         public int Health { get; set; }
         public int AttackDamage { get; set; }
+        
+        public bool IsDead { get; private set; } = false;
 
         public Creature(string name, int health, int _maxHealth, int attackDamage)
         {
@@ -148,14 +168,23 @@ namespace DungeonExplorer
         {
             health -= amount;
             Console.WriteLine($"Creature took {amount} damage, Remaining health {health}");
+
+            if (IsDead) return;
+            
+            health -= amount;
+            Console.WriteLine($"Creature took {amount} damage, Remaining health {health}");
+
+            if (health <= 0)
+            {
+                health = 0;
+                IsDead = true;
+                Console.WriteLine("Creature is defeated!");
+            }
         }
         
         public bool IsAlive()
         {
-            if (health >= 1)
-                return true;
-            else
-                return false;
+            return !IsDead;
         }
         public Creature()
         {

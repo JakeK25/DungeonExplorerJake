@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DungeonExplorer
 {
@@ -6,41 +7,119 @@ namespace DungeonExplorer
 
     {
         
+        private List<Item> itemChoices;
+        private bool hasBeenSearched = false;
+
+        public Room(string _description, Item item1, Item item2)
+        {
+            description = _description;
+            itemChoices = new List<Item> { item1, item2 };
+        }
+
+        public virtual void OnPlayerEnter(Player player)
+        {
+            Console.WriteLine(description);
+            hasBeenSearched = false;
+        }
+
+        public void SearchingRoom(Player player)
+        {
+            if (hasBeenSearched)
+            {
+                Console.WriteLine("You've already searched this room, there's no items left to find in this room...");
+                return;
+            }
+
+            Console.WriteLine("You search this room and find two items, however you are only able to carry one with you...");
+            for (int i = 0; i < itemChoices.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {itemChoices[i].name} - {itemChoices[i].desc}");
+            }
+            
+            Console.Write("Choose an item to pick up (1 or 2):");
+            int choice = -1;
+            while (choice < 1 || choice > 2)
+            {
+                int.TryParse(Console.ReadLine(), out choice);
+            }
+            
+            var selectedItem = itemChoices[choice - 1];
+            player.PickUpItem(selectedItem);
+            hasBeenSearched = true;
+        }
+
+        public string GetItemDescription()
+        {
+            return description;
+        }
+
+        public static Item noteBottle = new Item("Note in a Bottle", "A small bottle with a note inside lost from an old pirate legend");
+        public static Item seaShell = new Item("Sea Shell", "Small glistening seashell found along the beach, a beautiful gift for someone you care for");
+        
+        public static Item spiderVenom = new Item("spiderVenom", "Small vile of spiders venom collected directly from its' fangs");
+        public static Item spiderFang = new Item("Spiders' Fang", "Razor sharp fang gathered from a dead spider");
+
+        public static Item honeyJar = new Item("Honey Jar", "Jar full of delicious Honey");
+        public static Item hornetStinger = new Item("Hornet Stinger", "Sharp stingers gathered from a dead hornet");
+
+        public static Item crabSticks = new Item("Crab Sticks", "Delicious Crab Sticks ready to eat");
+        public static Item crabShell = new Item("Crab Shell", "Solid Crab shell used for protection from any harm thrown your way");
+
+        public static Item pirateHat = new Item("Pirate Hat", "Legendary Pirate hat to make you look awesome");
+        public static Item treasureMap = new Item("Treasure Map", "Treasure Map for the lost treasures of the black pearl");
+
+        public static Item navyBadge = new Item("Navy Badge", "Badge given to only the most prestigious soldiers for the Navy");
+        public static Item navyBackstaff = new Item("Navy Backstaff", "Backstaff to guide the Navy soldiers through the seven seas");
+
+        public static Item phantomDust = new Item("Phantom Dust", "Small vile of dust left by the phantoms, this is incredibly rare among collectors");
+        public static Item phantomCloak = new Item("Phantom Cloak", "Cloak that pirates gathered from the phantoms to allow them to become invisible");
+
+        public static Item captainHook = new Item("Captains' Hook", "The hook gathered from killing the pirate captain, whoever carries this is a legend of the seas");
+        public static Item goldenGlass = new Item("Golden Glass", "Golden glass gathered from the Pirate Captains' boat, used for drinking only the finest of rum");
+
         public static Room spidersDen =
             new Room(
-                "Spider's Den \n You walk into a large cave covered in cobwebs, and you feel a unnerving feeling...");
-        
+                "Spider's Den \n You walk into a large cave covered in cobwebs, and you feel a unnerving feeling...",
+                spiderVenom,
+                spiderFang
+                );
+
         public static Room hornetsNest =
-            new Room(
-                "Hornet's Nest \n You walk into a large cave with honeycombed walls, the floor is sticky and you hear a buzzing noise in the distance...");
-        
+                new Room("Hornet's Nest \n You walk into a large cave with honeycombed walls, the floor is sticky and you hear a buzzing noise in the distance...",
+                    honeyJar,
+                    hornetStinger);
+
         public static Room crabLair =
             new Room(
-                "Crab Infested Lair \n You walk into a cave with a thin layer of water along the floor and a scuttering sound in the distance...");
-        
+                "Crab Infested Lair \n You walk into a cave with a thin layer of water along the floor and a scuttering sound in the distance...",
+                crabSticks,
+                crabShell);
+
         public static Room pirateCavern =
             new Room(
-                "Undead Pirate Cavern \n You walk into a cave scattered with pirates crawling along the floor with flesh missing from their bodies you immediately feel a sense of danger...");
-        
+                "Undead Pirate Cavern \n You walk into a cave scattered with pirates crawling along the floor with flesh missing from their bodies you immediately feel a sense of danger...",
+                pirateHat,
+                treasureMap);
+
         public static Room navyRoom =
             new Room(
-                "Navy Soldier's Armory \n You are trespassing in a navy soldier armory with soldiers loitering and armoring up, they all turn to look at you in confusion...");
-        
+                "Navy Soldier's Armory \n You are trespassing in a navy soldier armory with soldiers loitering and armoring up, they all turn to look at you in confusion...",
+                navyBadge,
+                navyBackstaff);
+
         public static Room phantomRoom =
             new Room(
-                "Phantom's Graveyard \n You walk into a gloomy graveyard, fog covers your sight and you hear shrieking in the distance... ");
-        
-        public static Room bossRoom = 
-            new Room(
-                "Pirate Captain Room \n You walk into a huge cavern with a huge pirate ship on a large lake spanning the room. And a large gold chest within the middle of the ship");
-            
-        
-        private readonly string description;
+                "Phantom's Graveyard \n You walk into a gloomy graveyard, fog covers your sight and you hear shrieking in the distance... ",
+                phantomDust,
+                phantomCloak);
 
-        public Room(string description)
-        {
-            this.description = description;
-        }
+        public static Room bossRoom =
+            new Room(
+                "Pirate Captain Room \n You walk into a huge cavern with a huge pirate ship on a large lake spanning the room. And a large gold chest within the middle of the ship",
+                captainHook,
+                goldenGlass);
+        
+        public string description { get; private set; }
 
         public string GetDescription()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Channels;
 
@@ -13,8 +14,11 @@ namespace DungeonExplorer
         {
             gameMap = new Game_Map(15, 10);
             player = new Player(100, 100, 50);
-            player.CurrentRoom =
-                new Room("Skulls shores \n The entrance to the island you notice two large caves in front of you and you are stood on a large sandy beach, the sun is blazing");
+            player.CurrentRoom = new Room(
+                "Skulls shores \n The entrance to the island you notice two large caves in front of you and you are stood on a large sandy beach, the sun is blazing",
+                Room.noteBottle,
+                Room.seaShell);
+
             Console.WriteLine("Welcome to the Pirate Dungeon Explorer!");
             player.ShowHealth();
         }
@@ -47,8 +51,6 @@ namespace DungeonExplorer
                     Console.WriteLine("Invalid input please enter cutlass/musket ...");
                 }
             }
-
-            player.LevelNumber++;
         }
         
         public static void Maingameloop()
@@ -58,16 +60,18 @@ namespace DungeonExplorer
             do
             {
                 Console.Clear();
+                
                 Console.WriteLine("What would you like to do next...?:");
 
                 Console.WriteLine("1. Move Room...");                                           // Main game loop user input
                 Console.WriteLine("2. View Current Health");
                 Console.WriteLine("3. View Inventory");
-                Console.WriteLine("4. View description of room");
+                Console.WriteLine("4. View Description of room");
                 Console.WriteLine("5. View Map");
-                Console.WriteLine("6. Keep searching room");
-                Console.WriteLine("7. Exit Game");
-                Console.WriteLine("Enter your choice using 1 to 6:");
+                Console.WriteLine("6. Keep Searching room");
+                Console.WriteLine("7. Sort Inventory alphabetically");
+                Console.WriteLine("8. Exit Game");
+                Console.WriteLine("Enter your choice using 1 to 8:");
 
                 var userInput = Console.ReadLine();
 
@@ -99,17 +103,33 @@ namespace DungeonExplorer
                 }
                 else if (userInput == "6")
                 {
-                    // Not implemented
+                    if (player.CurrentRoom != null)
+                    {
+                        player.CurrentRoom.SearchingRoom(player);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You are not in a room");
+                    }
+
+                    Console.ReadLine();
                 }
+               
                 else if (userInput == "7")
                 {
-                    Console.WriteLine(
-                        "You chose to Exit the game"); // Option to exit the game and terminate the console
+                    Console.WriteLine("You chose to sort your inventory...");
+                    player.ShowSortedInventory();
+                    Console.ReadLine();
+                }
+                
+                else if (userInput == "8")
+                {
+                    Console.WriteLine("You chose to Exit the game"); // Option to exit the game and terminate the console
                     Environment.Exit(0);
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Choice, choose a number between 1 and 6");
+                    Console.WriteLine("Invalid Choice, choose a number between 1 and 8");
                     Console.ReadLine(); // Exception handling to ensure user input is correct
                 }
             } while (isPlaying);
