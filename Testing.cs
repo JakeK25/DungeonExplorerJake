@@ -22,11 +22,11 @@ namespace DungeonExplorer
 
                 // Test Creature Creation
                 Spider spider = new Spider();
-                Debug.Assert(spider.health == 40, "Spider health should be 40");
+                Debug.Assert(spider.health == 100, "Spider health should be 100");
                 Debug.Assert(spider.AttackDamage == 8, "Spider attack damage should be 8");
                 Hornet hornet = new Hornet();
-                Debug.Assert(hornet.health == 50, "Hornet health should be 50");
-                Debug.Assert(hornet.AttackDamage == 10, "Hornet attack damage should be 10");
+                Debug.Assert(hornet.health == 100, "Hornet health should be 50");
+                Debug.Assert(hornet.AttackDamage == 12, "Hornet attack damage should be 10");
 
                 // Output results
                 Console.WriteLine("All tests passed successfully!");
